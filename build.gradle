@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group   = 'edu.yourorg.floo'
+version = '1.0'
+
+// As the documentation confirms, only Maven Central is needed.
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // The official FlowDroid dependencies from Maven Central
+    implementation 'de.fraunhofer.sit.sse.flowdroid:soot-infoflow:2.12.0'
+    implementation 'de.fraunhofer.sit.sse.flowdroid:soot-infoflow-summaries:2.12.0'
+    implementation 'de.fraunhofer.sit.sse.flowdroid:soot-infoflow-android:2.12.0'
+
+    // Your project's other dependencies
+    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'org.graphstream:gs-core:2.0'
+    implementation 'org.graphstream:gs-ui-swing:2.0'
+}
+
+application {
+    mainClass = 'HeapRWFinder'
+}
+
+/* -------------  Floo helper tasks ------------- */
+tasks.register('heapFinder', JavaExec) {
+    group       = 'instrumenter'
+    description = 'Floo: Generate read/write signatures'
+    mainClass   = 'HeapRWFinder'
+    classpath   = sourceSets.main.runtimeClasspath
+    args        = ['game2048_reads.json',
+                   '../game2048_floo/game2048.apk']
+}
+tasks.register('cacheability', JavaExec) {
+    group       = 'instrumenter'
+    description = 'Floo: Insert helper calls'
+    mainClass   = 'DetermineCacheability'
+    classpath   = sourceSets.main.runtimeClasspath
+    args        = ['../game2048_floo/game2048.apk']
+}
+tasks.register('computeCacher', JavaExec) {
+    group       = 'instrumenter'
+    description = 'Floo: Inject memoization logic'
+    mainClass   = 'ComputeCacher'
+    classpath   = sourceSets.main.runtimeClasspath
+    args        = ['../game2048_floo/game2048.apk']
+}
+tasks.register('timestampsPrinter', JavaExec) {
+    group       = 'instrumenter'
+    description = 'Floo: Add timing logs'
+    mainClass   = 'TimestampsPrinter'
+    classpath   = sourceSets.main.runtimeClasspath
+    args        = ['../game2048_floo/game2048.apk']
+}
