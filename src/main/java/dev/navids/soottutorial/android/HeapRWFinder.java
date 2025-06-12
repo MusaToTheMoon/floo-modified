@@ -29,7 +29,7 @@ public class HeapRWFinder {
     // cmd line way to invoke this: ./gradlew run --args="HeapRWFinder
     // /disk/ubuntu_data/projects/SootTutorial/demo/HeapRW/simple_out.json <apk>"
 
-    private static String androidJar = "/disk/Android/Sdk/platforms";
+    private static String androidJar = System.getenv("ANDROID_HOME") + "/platforms";
     static String androidDemoPath = System.getProperty("user.dir") + File.separator + "demo" + File.separator
             + "Android";
     static String apkPath = "";

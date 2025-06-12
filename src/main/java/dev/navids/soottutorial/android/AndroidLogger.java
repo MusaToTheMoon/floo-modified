@@ -4,7 +4,7 @@ package dev.navids.soottutorial.android;
 import soot.*;
 import soot.jimple.*;
 import soot.PatchingChain;
-import soot.javaToJimple.LocalGenerator;
+import soot.jimple.toolkits.scalar.LocalGenerator;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.io.Serializable;
 
 public class AndroidLogger {
 
-    private static String androidJar = "/disk/Android/Sdk/platforms";
+    private static String androidJar = System.getenv("ANDROID_HOME") + "/platforms";
     static String androidDemoPath = System.getProperty("user.dir") + File.separator + "demo" + File.separator + "Android";
     static String apkPath = androidDemoPath + File.separator + "/sootForFuncArgWithDynamicArg.apk";
     static String outputPath = androidDemoPath + File.separator + "/Instrumented";

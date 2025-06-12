@@ -27,7 +27,7 @@ import dev.navids.soottutorial.android.AndroidLogger.Pair;
 import java.io.Serializable;
 
 public class InsertHelperCallsForSubFunctionCalls {
-    private static String androidJar = "/disk/Android/Sdk/platforms";
+    private static String androidJar = System.getenv("ANDROID_HOME") + "/platforms";
     static String androidDemoPath = System.getProperty("user.dir") + File.separator + "demo" + File.separator
             + "Android";
     static String apkPath = "";

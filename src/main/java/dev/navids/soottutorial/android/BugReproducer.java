@@ -5,7 +5,7 @@ import soot.*;
 import soot.jimple.*;
 import soot.PatchingChain;
 import soot.util.Chain;
-import soot.javaToJimple.LocalGenerator;
+import soot.jimple.toolkits.scalar.LocalGenerator;
 
 import java.io.File;
 import java.util.ArrayList;

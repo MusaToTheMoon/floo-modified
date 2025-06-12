@@ -2,7 +2,7 @@ package dev.navids.soottutorial.android;
 
 import soot.*;
 import soot.jimple.*;
-import soot.javaToJimple.LocalGenerator;
+import soot.jimple.toolkits.scalar.LocalGenerator;
 import soot.jimple.infoflow.android.manifest.ProcessManifest;
 import soot.options.Options;
 

@@ -2,7 +2,7 @@ package dev.navids.soottutorial.android;
 
 import org.xmlpull.v1.XmlPullParserException;
 import soot.*;
-import soot.javaToJimple.LocalGenerator;
+import soot.jimple.toolkits.scalar.LocalGenerator;
 import soot.jimple.*;
 import soot.jimple.infoflow.android.manifest.ProcessManifest;
 import soot.options.Options;

@@ -15,7 +15,7 @@ public class AndroidInstrumentTest {
     @Before
     public void setUp(){
 
-        String androidJar = "/disk/Android/Sdk/platforms";
+        String androidJar = System.getenv("ANDROID_HOME") + "/platforms";
         if(System.getenv().containsKey("ANDROID_HOME"))
             androidJar = System.getenv("ANDROID_HOME")+ File.separator+"platforms";
         String apkPath = System.getProperty("user.dir") + File.separator + "demo" + File.separator + "Android" + File.separator + "/calc.apk";
