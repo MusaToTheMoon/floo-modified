@@ -34,16 +34,26 @@ public class InstrumentUtil {
         Options.v().set_prepend_classpath(true);
 
         // Modification: Turned off type checker
-        Options.v().set_validate(false);                // disable type checker
+        Options.v().set_validate(false);                // disable type checker: flipped true to false
         //------------
 
         Options.v().set_src_prec(Options.src_prec_apk);
         Options.v().set_output_format(Options.output_format_dex);
         Options.v().set_android_jars(androidJar);
-        Options.v().set_process_dir(Collections.singletonList(apkPath));
+
+        // Modification: added helper.jar into the path
+//        Options.v().set_process_dir(Collections.singletonList(apkPath));
+        List<String> inputs = new ArrayList<>();
+        inputs.add(apkPath);          // the APK we’re analysing
+        inputs.add("helper.jar");     // jar with HelperHashCode / HelperAsyncPrinter / HelperDeepEquals
+        Options.v().set_process_dir(inputs);
+        //------------
+
+
         Options.v().set_include_all(true);
         Options.v().set_process_multiple_dex(true);
         Options.v().set_output_dir(outputPath);
+        Options.v().set_force_overwrite(true);
         Scene.v().addBasicClass("java.io.PrintStream",SootClass.SIGNATURES);
         Scene.v().addBasicClass("java.lang.System",SootClass.SIGNATURES);
         Scene.v().loadNecessaryClasses();

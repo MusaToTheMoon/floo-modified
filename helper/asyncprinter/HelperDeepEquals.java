@@ -1,10 +1,5 @@
 package com.example.asyncprinter;
 
-import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
-
-import android.os.Environment;
-
-import org.unitils.reflectionassert.ReflectionComparatorMode;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -127,23 +122,21 @@ public class HelperDeepEquals {
     // Call this function to add function details to the in memory record
     public static void addFunctionObj(String functionName, Object []arrayOfObjects)  {
         if (firstRun) {
-            //Checking the availability state of the External Storage.
+            /*  -- ORIGINAL ANDROID-STORAGE LOGGING --
             String state = Environment.getExternalStorageState();
             if (!Environment.MEDIA_MOUNTED.equals(state)) {
-                //If it isn't mounted - we can't write into it.
-                return;
+                return;                     // SD-card not mounted
             }
-            //Create a new file that points to the root directory, with the given name:
-            root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            root  = Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_DOWNLOADS);
             file1 = new File(root, "memo_data_oct19.txt");
             try {
                 outputStreamMemoFile = new FileOutputStream(file1, true);
-            } catch (FileNotFoundException e) {
-
-            }
+            } catch (FileNotFoundException e) { }
             countOfPendingOperations.set(0);
-            firstRun = false;
+            */
 
+            firstRun = false;
         }
 
         // asynchronously
@@ -171,6 +164,7 @@ public class HelperDeepEquals {
 
     public static void printStuffAndLogMemo(String functionName, Object []arrayOfObjectsToPrint,Object []arrayOfObjectsInRead) {
         if (firstRun) {
+            /* -- ORIGINAL ANDROID-STORAGE LOGGING --
             //Checking the availability state of the External Storage.
             String state = Environment.getExternalStorageState();
             if (!Environment.MEDIA_MOUNTED.equals(state)) {
@@ -186,8 +180,9 @@ public class HelperDeepEquals {
 
             }
             countOfPendingOperations.set(0);
-            firstRun = false;
+            */
 
+            firstRun = false;
         }
 
         // asynchronously
@@ -236,14 +231,18 @@ public class HelperDeepEquals {
 
     private static boolean listContainsFunctionRunInfo(FunctionRunInfoDeep item) {
         for (FunctionRunInfoDeep f1: listOfFunctionRunInfo) {
-            try {
-                if ((f1.functionName.equals(item.functionName))) {
-                    assertReflectionEquals(f1.listOfObjects, item.listOfObjects, ReflectionComparatorMode.IGNORE_DEFAULTS);
-                    return true;
-                }
-            } catch (AssertionError e) {
-                continue;
+//            try {
+//                if ((f1.functionName.equals(item.functionName))) {
+//                    assertReflectionEquals(f1.listOfObjects, item.listOfObjects, ReflectionComparatorMode.IGNORE_DEFAULTS);
+//                    return true;
+//                }
+//            } catch (AssertionError e) {
+//                continue;
+//            }
+            if (f1.functionName.equals(item.functionName) && f1.listOfObjects.equals(item.listOfObjects)) {
+                return true;
             }
+
         }
         return false;
     }

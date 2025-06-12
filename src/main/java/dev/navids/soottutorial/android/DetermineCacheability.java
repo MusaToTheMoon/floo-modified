@@ -27,6 +27,11 @@ import java.util.Iterator;
 import dev.navids.soottutorial.android.AndroidLogger.Pair;
 import java.io.Serializable;
 
+// Modification: changed absolute path from original creator to a relative path
+import java.nio.file.Path;
+import java.nio.file.Paths;
+// -------
+
 /***
  * This class transforms a given APK. For each function, it first identifies the
  * list of variables it reads from. Then, at the entrance of the function, it
@@ -361,7 +366,11 @@ public class DetermineCacheability {
     }
 
     public static void writeSetOfFunctionsWeCanOptimizeToFile() {
-        String fileContainingSetOfFunctionsWeCanOptimize = "/disk/Code/projects/soot-instrument/demo/Android/Instrumented/set_of_functions_we_can_optimize.txt";
+        // Modification: changed absolute path from original creator to a relative path
+        String projectRoot = System.getProperty("user.dir");
+        String fileContainingSetOfFunctionsWeCanOptimize = Paths.get(projectRoot, "set_of_functions_we_can_optimize.txt")
+                .toString();
+        //---------
         Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
         String jsonReadWWriteDeps = gson.toJson(setOfFunctionsWeCanOptimize);
 
