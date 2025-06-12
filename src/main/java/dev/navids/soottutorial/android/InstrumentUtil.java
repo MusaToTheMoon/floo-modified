@@ -19,9 +19,24 @@ public class InstrumentUtil {
     public static void setupSoot(String androidJar, String apkPath, String outputPath) {
         G.reset();
         Options.v().set_allow_phantom_refs(true);
+
+        //----------- Modification: excluded android/kotlin libraries bcz floo couldn't analyse these, it was crashing
+        Options.v().set_exclude(Arrays.asList(
+                "kotlin.", "kotlinx.", "androidx."));
+//                "androidx.recyclerview.",
+//                "androidx.constraintlayout.",
+//                "androidx.collection.",
+//                "androidx.core."));
+        Options.v().set_no_bodies_for_excluded(true);   // don’t decompile those
+        //------------
+
         Options.v().set_whole_program(true);
         Options.v().set_prepend_classpath(true);
-        Options.v().set_validate(true);
+
+        // Modification: Turned off type checker
+        Options.v().set_validate(false);                // disable type checker
+        //------------
+
         Options.v().set_src_prec(Options.src_prec_apk);
         Options.v().set_output_format(Options.output_format_dex);
         Options.v().set_android_jars(androidJar);
